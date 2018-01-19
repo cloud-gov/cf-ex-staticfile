@@ -2,44 +2,37 @@
 
 Your cloud.gov apps have already incurred costs for January, so you don't have
 any immediate obligation to stop your apps, however you may want to stop them
-and replace them with a static website if you can't provide the operations and maintenance (O&M) the applications requires under ATO
+and replace them with a static website if you can't provide the operations and maintenance (O&M) the applications require under ATO
 
 To replace your applications with a static site:
 
 1. Prepare your new content. You may just want to clone or fork
-   https://github.com/18F/cf-ex-staticfile and update index.html 
-   (see attached)
-
+   https://github.com/18F/cf-ex-staticfile and update `index.html`.`
 1. Connect to cloud.gov with the Cloud Foundry CLI:
-
-```
-cf login --sso -a https://api.fr.cloud.gov
-cf target -o (your_org) -s (your_space)
-```
- 
+    ```
+    cf login --sso -a https://api.fr.cloud.gov
+    cf target -o (your_org) -s (your_space)
+    ```
 2. Stop your current application:
-
-cf stop (your_app)
-
-3. Push the static site. Change directory to the clone of `cf-ex-staticfile`, then:
-
-```
-cf push (your_app)
-```
-
+    ```
+    cf stop (your_app)
+    ```
+3. Change directory to the clone of `cf-ex-staticfile`, then, push your new content:
+    ```
+    cf push (your_app)
+    ```
 4. If you have custom `routes` you'll need to re-map those:
-
-```
-cf map-route (your_app) --hostname (custom-route)
-```
+    ```
+    cf map-route (your_app) app.cloud.gov --hostname (custom-route)
+    ```
 
 ## Example: Replace app with static content
 
 In this example, I'm replacing Java app `spring-music` at the hostname
 `spring-music.app.cloud.gov` with the static site from
-`cf-ex-staticfile`. It assumes you've already done a `cf login --sso`:
+`cf-ex-staticfile`. It assumes you've already done `cf login --sso`:
 
-First stop the current app:
+First list the currents, and stop the app of interest:
 
 ```
 $ cf apps
@@ -47,9 +40,7 @@ Getting apps in org test-org / space dev as peter.burkholder@gsa.gov...
 OK
 
 name               requested state   instances   memory   disk   urls
-landing            stopped           0/2         64M      1G
 landing-test       stopped           0/2         64M      1G
-preview-shutdown   stopped           0/1         512M     1G     preview-shutdown.app.cloud.gov
 spring-music       started           1/1         1G       1G     spring-music.app.cloud.gov
 
 
@@ -58,7 +49,7 @@ Stopping app spring-music in org test-org / space dev as peter.burkholder@gsa.go
 OK
 ```
 
-Now, change directory to the static site and `push` that out with the same name:
+Now, change directory to the static site and `push` that out with the same name as the app you're replacing:
 
 ```
 $ cd ~/path/to/cf-ex-staticfile
@@ -78,7 +69,7 @@ buildpack: staticfile
 #0   running   2018-01-19 03:11:03 PM   0.0%   5.1M of 1G   7.2M of 1G
 ```
 
-Now test at https://spring-music.app.cloud.gov
+Now test at your target URL: https://spring-music.app.cloud.gov
 
 ## Example route map
  
