@@ -1,8 +1,4 @@
-# If you need to shut down
-
-Your cloud.gov apps have already incurred costs for January, so you don't have
-any immediate obligation to stop your apps, however you may want to stop them
-and replace them with a static website if you can't provide the operations and maintenance (O&M) the applications require under ATO
+# If you need to replace app with static content
 
 To replace your applications with a static site:
 
@@ -71,7 +67,7 @@ buildpack: staticfile
 
 Now test at your target URL: https://spring-music.app.cloud.gov
 
-## Example route map
+## Example: Add customized route to your static site
  
 In this example, I want `landing-preview.app.cloud.gov` to also go to the same
 static site from above:
